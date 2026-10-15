@@ -1,0 +1,2 @@
+Hello from Node.js asynchronous programming!
+This file is used to compare sync and async file operations.
