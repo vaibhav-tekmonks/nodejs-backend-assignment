@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Sample Record 1",
+    "description": "This is a sample record",
+    "id": "213d73ed-f234-43bd-8080-60b1a9563543",
+    "createdAt": "2026-10-15T07:42:58.293Z"
+  },
+  {
+    "name": "Sample Record 2",
+    "description": "This is a sample record 2",
+    "id": "34189a31-b2dc-4a03-b6a3-438e888328e4",
+    "createdAt": "2026-10-15T07:43:18.311Z"
+  }
+]
