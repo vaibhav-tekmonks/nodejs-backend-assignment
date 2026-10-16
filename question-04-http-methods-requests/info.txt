@@ -1,0 +1,23 @@
+server.js
+Starts the HTTP server and handles incoming requests.
+
+ routes/userRoutes.js
+Matches HTTP methods and paths to the appropriate controller.
+
+ controllers/userController.js
+Coordinates request processing and HTTP responses.
+
+ services/userService.js
+Contains user-related operations, such as creating and listing users.
+
+ validators/userValidator.js
+Validates required fields and user input.
+
+ utils/readRequestBody.js
+Reads the request stream, enforces the body limit, and parses JSON.
+
+ utils/sendJSON.js
+Sends consistent JSON responses with status codes and headers.
+
+ data/users.js
+Stores sample users in memory.
