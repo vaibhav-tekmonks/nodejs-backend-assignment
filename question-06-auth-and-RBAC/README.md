@@ -24,6 +24,7 @@ Create `question-06-auth-and-RBAC/.env` with a private signing secret:
 JWT_SECRET=replace-with-a-long-random-secret
 JWT_EXPIRES_IN=1h
 ```
+also create `question-06-auth-and-RBAC/data/accounts.json` and `question-06-auth-and-RBAC/data/users.json` with `[]`.
 
 Keep `.env` private; do not commit the signing secret. Start the API:
 
