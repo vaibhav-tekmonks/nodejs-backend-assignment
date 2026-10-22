@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 09 - Nginx</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Nginx and Node.js Demo</h1>
+
+    <p>This HTML page is served directly by Nginx.</p>
+
+    <button id="apiButton">Call Node.js API</button>
+
+    <p id="result">Click the button to test the API.</p>
+
+    <script>
+        document.getElementById("apiButton").addEventListener("click", async () => {
+            const result = document.getElementById("result");
+
+            try {
+                const response = await fetch("/api/hello");
+                const data = await response.json();
+                result.textContent = data.message;
+            } catch (error) {
+                result.textContent = "Could not reach the API.";
+            }
+        });
+    </script>
+</body>
+</html>
