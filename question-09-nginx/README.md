@@ -32,13 +32,30 @@ question-09-nginx/
 - Requests starting with `/api/` are forwarded to Node.js.
 - Nginx forwards the Host, client IP, proxy chain, and original protocol headers.
 
-## Installation
-
-On Ubuntu/Debian:
+## 📋 Nginx Setup Commands (For Reference)
 
 ```bash
-sudo apt update
-sudo apt install nginx curl nodejs npm
+# Install Nginx
+sudo apt update && sudo apt install nginx
+
+# Copy static files
+sudo mkdir -p /var/www/question-09
+sudo cp -r /PATH_TO_PROJECT_FOLDER/public/. /var/www/question-09/
+
+# Create Nginx config
+sudo cp nginx/question-09.conf /etc/nginx/sites-available/question-09
+
+# Enable the site
+sudo ln -s /etc/nginx/sites-available/question-09 /etc/nginx/sites-enabled/question-09
+
+# Remove default site (optional)
+sudo rm /etc/nginx/sites-enabled/default
+
+# Test configuration
+sudo nginx -t
+
+# Reload Nginx
+sudo systemctl reload nginx
 ```
 
 ## Run the Application
@@ -55,21 +72,6 @@ Enable and start Nginx:
 sudo systemctl enable --now nginx
 ```
 
-Copy static files:
-
-```bash
-sudo mkdir -p /var/www/question-09
-sudo cp -r public/. /var/www/question-09/
-```
-
-Configure Nginx using `/etc/nginx/sites-available/question-09` and enable it through `/etc/nginx/sites-enabled/question-09`.
-
-Validate and reload:
-
-```bash
-sudo nginx -t
-sudo systemctl reload nginx
-```
 
 ## Test Cases
 
