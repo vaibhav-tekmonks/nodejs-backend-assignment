@@ -4,17 +4,27 @@
 
 Demonstrate session-based authentication using Node.js core modules and compare it with JWT-based authentication without using Express.js.
 
-## Implementation
+---
 
-- `server.js` — creates the HTTP server and routes requests.
-- `routes/authRoutes.js` — handles login and logout.
-- `routes/userRoutes.js` — protects the profile endpoint.
-- `services/sessionService.js` — creates, retrieves, expires and deletes sessions.
-- `utils/httpUtils.js` — handles JSON requests and responses.
+## Architecture & File Structure
+
+```
+question-07-session-based-auth/
+├── server.js                    ← Entry point, URL parsing, error handling
+├── routes/
+│   ├── authRoutes.js            ← POST /login, POST /logout
+│   └── userRoutes.js            ← GET /profile (protected)
+├── services/
+│   └── sessionService.js        ← Session store (in-memory Map)
+└── utils/
+    └── httpUtils.js             ← sendJson + readJsonBody
+```
+---
 
 ## Run
 
 ```bash
+cd question-07-session-based-auth
 node server.js
 ```
 
@@ -124,6 +134,20 @@ Session-based authentication stores user session information on the server and i
 
 Server-side sessions are straightforward to invalidate on logout. Stateless JWTs do not normally require a server-side session lookup, but immediate revocation requires additional mechanisms.
 
+
+---
+
+## Session-Based vs JWT-Based — Detailed Comparison
+
+| Aspect | Session-Based | JWT-Based |
+|--------|--------------|-----------|
+| **Where identity is stored** | Server-side (memory, Redis, DB) | Client-side (the token itself) |
+| **What client sends** | Cookie with session ID | `Authorization: Bearer <token>` |
+| **Server state** | **Stateful** — server must look up each session | **Stateless** — server only verifies the signature |
+| **Scalability** | Harder — sessions must be shared across servers | Easier — any server can verify the token independently |
+| **Logout** | Immediate — delete session from server | Difficult — token is valid until it expires. Need a blacklist for true revocation. |
+| **Token size** | Small (just a session ID, ~64 chars) | Larger (encoded payload, ~200+ chars) |
+| **User info access** | Requires DB lookup | Payload contains user info (role, ID) |
 ## Limitations
 
 This question 7 assignment uses in-memory session storage and hardcoded demo credentials for learning.

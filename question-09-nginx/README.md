@@ -11,16 +11,18 @@ Configure Nginx to serve static files and forward API requests to a Node.js HTTP
 - Linux
 - curl
 
-## Project Structure
+---
 
-```text
+## File Structure
+
+```
 question-09-nginx/
-├── server.js
+├── server.js                  ← Node.js API server (port 3000)
 ├── public/
-│   ├── index.html
-│   └── style.css
+│   ├── index.html             ← Static HTML page
+│   └── style.css              ← Static CSS
 ├── nginx/
-│   └── question-09.conf
+│   └── question-09.conf       ← Nginx configuration file
 └── README.md
 ```
 

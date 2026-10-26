@@ -2,6 +2,32 @@
 
 A Node.js HTTP API that authenticates users with JWTs and restricts user-management operations by role.
 
+---
+
+## Architecture & File Structure
+
+```
+question-06-auth-and-RBAC/
+├── server.js                    ← Entry point, JWT_SECRET validation
+├── .env                         ← JWT_SECRET and JWT_EXPIRES_IN
+├── .gitignore                   
+├── routes/
+│   ├── index.js                 ← Master router — dispatches to sub-routers
+│   ├── authRoutes.js            ← POST /login
+│   └── userRoutes.js            ← CRUD routes (protected)
+├── middleware/
+│   └── auth.js                  ← authenticateToken() + authorizeRoles()
+├── services/
+│   ├── authService.js           ← Login logic (bcrypt + JWT)
+│   └── userService.js           ← User CRUD
+├── utils/
+│   └── httpUtils.js             ← sendJson + readJsonBody
+└── data/
+    ├── accounts.json            ← Login credentials (email, passwordHash, role)
+    └── users.json               ← User records for CRUD
+```
+---
+
 ## Features
 
 - `POST /login` verifies an email and password and returns a signed JWT.

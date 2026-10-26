@@ -11,13 +11,13 @@ A working Node.js program that demonstrates asynchronous execution and error han
 - Observe how I/O, Promise microtasks, and timers are scheduled by the event loop.
 - Handle file operation errors without leaving them unhandled.
 
-## Project Structure
 
-```text
+## File Structure
+
+```
 question-02-async/
-├── index.js
-├── sample.txt
-└── README.md
+├── index.js      ← All demonstrations in one file
+└── sample.txt    ← Test file for I/O operations
 ```
 
 ## Run the Program

@@ -2,11 +2,9 @@
 
 ## 1. Overview
 
-This project improves the reliability, security, and maintainability of a Node.js HTTP API.
-
-The implementation uses Node.js core modules and a modular structure without Express.js or Express middleware.
-
-The main objectives are to handle errors consistently, validate incoming requests, protect sensitive information, log useful request details, and test common failure scenarios.
+- This project improves the reliability, security, and maintainability of a Node.js HTTP API.
+- The implementation uses Node.js core modules and a modular structure without Express.js or Express middleware.
+- The main objectives are to handle errors consistently, validate incoming requests, protect sensitive information, log useful request details, and test common failure scenarios.
 
 ## 2. Objectives
 
@@ -27,32 +25,31 @@ The main objectives are to handle errors consistently, validate incoming request
 - `curl` for API testing
 - JSON files for storing data
 - Existing authentication dependencies, such as `jsonwebtoken` and `bcryptjs`, where applicable
+---
 
+## 4. Architecture & File Structure
 
-## 4. Project Structure
-
-```text
+```
 question-10-api-hardening/
-├── server.js
-├── routes/
-│   ├── index.js
-│   ├── authRoutes.js
-│   └── userRoutes.js
-├── controllers/
-│   ├── authController.js
-│   └── userController.js
-├── middleware/
-│   └── authMiddleware.js
-├── utils/
-│   ├── httpUtils.js
-│   ├── errorHandler.js
-│   └── requestLogger.js
-├── data/
-│   ├── accounts.json
-│   └── user.json
-├── .env
+├── server.js                      ← Entry point + global error handler
+├── .env                           ← Secrets (JWT_SECRET, JWT_EXPIRES_IN)
 ├── .gitignore
-└── README.md
+├── routes/
+│   ├── index.js                   ← Master router
+│   ├── authRoutes.js              ← POST /api/auth/login
+│   └── userRoutes.js              ← /api/users/* (protected CRUD)
+├── controllers/
+│   ├── authController.js          ← Login logic (bcrypt + JWT)
+│   └── userController.js          ← User CRUD operations
+├── middleware/
+│   └── authMiddleware.js          ← JWT verification + RBAC
+├── utils/
+│   ├── errorHandler.js            ← createError() + handleError()
+│   ├── httpUtils.js               ← sendJson() + readJsonBody()
+│   └── requestLogger.js           ← Method/path/status/time logging
+└── data/
+    ├── accounts.json              ← Login credentials
+    └── user.json                  ← User records
 ```
 
 ## 5. Implementation Journey
@@ -102,8 +99,6 @@ The flow is:
 
 This avoids repeating error-response logic in every route.
 
-Asynchronous operations must be awaited or returned so that their errors reach the central `catch` block.
-
 ### Step 4: Added request validation
 
 Request validation checks that incoming data is in the expected format before the API processes it.
@@ -125,23 +120,11 @@ Invalid requests are rejected with an appropriate status code rather than being 
 
 Protected user routes require a valid authentication token.
 
-The API distinguishes between authentication and authorization:
-
-- `401 Unauthorized`: Missing, invalid, or expired token.
-- `403 Forbidden`: The user is authenticated but does not have the required role or permission.
-
 Sensitive authentication details are not returned to the client.
 
 ### Step 6: Added request logging
 
 Created `utils/requestLogger.js` to record request details.
-
-Each completed response should log:
-
-- HTTP method
-- Request path without query-string values
-- HTTP status code
-- Response time in milliseconds
 
 Example log:
 
@@ -150,20 +133,20 @@ GET /api/users | Status: 200 | Time: 2.14 ms
 POST /api/auth/login | Status: 401 | Time: 1.05 ms
 GET /api/unknown | Status: 404 | Time: 0.82 ms
 ```
-
-The values above are examples, not measured test results.
-
-Passwords, authentication tokens, secret keys, and sensitive request-body data must not be logged.
+- HTTP method
+- Request path without query-string values
+- HTTP status code
+- Response time in milliseconds
 
 ### Step 7: Handled malformed requests and unexpected errors
 
 The API handles malformed JSON and invalid request data through validation and centralized error handling.
 
-Unexpected server errors should return a generic `500 Internal Server Error` response.
+Unexpected server errors returns a generic `500 Internal Server Error` response.
 
 Where supported, malformed HTTP requests that fail before normal route handling are handled at the HTTP server level.
 
-If a response has already started, the error handler must avoid attempting to send a second response.
+If a response has already started, the error handler avoids attempting to send a second response.
 
 ### Step 8: Tested the API
 
@@ -177,7 +160,6 @@ The detailed test commands are included below.
 
 - Node.js installed.
 - Required project dependencies installed.
-- Valid environment configuration.
 - JSON data files initialized.
 
 Install the project dependencies from the repository root:

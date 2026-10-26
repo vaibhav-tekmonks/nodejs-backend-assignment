@@ -7,6 +7,46 @@ A modular Node.js HTTP server (no Express) that handles JSON user requests, vali
 - Node.js
 - No external packages
 
+---
+
+## Architecture & File Structure
+
+```
+question-04-http-methods-requests/
+├── server.js                        ← Entry point, top-level error handler
+├── routes/
+│   └── userRoutes.js                ← Route matching and dispatch
+├── controllers/
+│   └── userController.js            ← Request-level logic (parse, validate, respond)
+├── services/
+│   └── userService.js               ← In-memory data management
+├── validators/
+│   └── userValidator.js             ← Input validation rules
+├── utils/
+│   ├── readRequestBody.js           ← Manual body parsing 
+│   └── sendJSON.js                  ← Response helper
+└── data/
+    └── users.js                     ← In-memory user array
+```
+
+### The MVC-Like Structure
+
+Breaked the code into a layered architecture:
+
+```
+Request → Route → Controller → Validator → Service → Response
+```
+
+| Layer | Responsibility |
+|-------|---------------|
+| **Routes** | Match URL + method |
+| **Controllers** | Orchestrate — parse body, validate, call service, send response |
+| **Validators** | Check input data |
+| **Services** | Data operations |
+| **Utils** | Generic helpers |
+
+---
+
 ## Run the server
 
 From the repository root:

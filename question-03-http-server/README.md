@@ -15,7 +15,7 @@ A simple HTTP server built with Node.js's built-in `http` module. It checks each
 From this directory, run:
 
 ```bash
-node server.js
+node server.js   ← Single file — server + routing + response handling
 ```
 
 The server listens at [http://localhost:3000](http://localhost:3000). Keep the terminal open while making requests.

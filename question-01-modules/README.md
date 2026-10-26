@@ -2,6 +2,19 @@
 
 A small modular Node.js app for managing records in a local JSON file—no database required.
 
+
+## Architecture & File Structure
+
+```
+question-01-modules/
+├── app.js            ← Entry point — orchestrates CRUD demo
+├── fileStorage.js    ← Low-level file I/O (read/write JSON)
+├── recordService.js  ← Business logic (CRUD functions)
+├── test-storage.js   ← Quick smoke-test for the storage layer
+└── data.json         ← Persistent JSON data store
+```
+
+
 ## Features
 
 - Create, list, find, update, and delete records.
@@ -9,9 +22,11 @@ A small modular Node.js app for managing records in a local JSON file—no datab
 - Validate inputs and report missing records or invalid JSON.
 - Keep storage (`fileStorage.js`) and record operations (`recordService.js`) in separate modules.
 
-## Run
+
+##  How to Run
 
 ```bash
+cd question-01-modules
 node app.js
 ```
 

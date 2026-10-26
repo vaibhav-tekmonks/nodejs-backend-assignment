@@ -7,6 +7,25 @@ A basic REST API built with Node.js core modules without Express.
 - Node.js
 - No external packages
 
+---
+
+## Architecture & File Structure
+
+```
+question-05-rest-api/
+├── server.js                  ← Entry point + global error handler
+├── routes/
+│   └── userRoutes.js          ← URL matching + method dispatch
+├── services/
+│   └── userService.js         ← Business logic + file persistence + validation
+├── utils/
+│   └── httpUtils.js           ← sendJson() + readJsonBody()
+└── data/
+    └── users.json             ← Persistent JSON file store
+```
+
+---
+
 ## Run the server
 
 From the repository root:

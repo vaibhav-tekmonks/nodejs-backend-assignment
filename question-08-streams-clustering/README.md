@@ -4,14 +4,11 @@
 
 Question 8 demonstrates how to process large files efficiently using Node.js streams and how to distribute incoming HTTP requests across multiple worker processes using the built-in `cluster` module.
 
-The implementation uses Node.js core modules without Express.js or any external dependencies.
-
 ## Objectives
 
 - Read large files using streams instead of loading the entire file into memory.
 - Process data incrementally and write the output to another file.
 - Handle stream errors and completion events.
-- Understand blocking and non-blocking operations.
 - Use Node.js clustering to distribute HTTP requests across multiple worker processes.
 - Detect worker failures and restart failed workers.
 
@@ -26,17 +23,16 @@ The implementation uses Node.js core modules without Express.js or any external 
 - `cluster` — Multiple worker processes
 - `os` — CPU information
 
-## Folder Structure
+## Architecture & File Structure
 
-```text
+```
 question-08-streams-clustering/
-├── data/
-│   ├── large-input.txt
-│   └── processed-output.txt
-├── stream-processing.js
-├── cluster-server.js
-├── cluster-worker.js
-└── README.md
+├── stream-processing.js     ← Stream-based file processing
+├── cluster-server.js        ← Primary process — forks workers
+├── cluster-worker.js        ← HTTP server per worker
+└── data/
+    ├── large-input.txt      ← Source file (large text)
+    └── processed-output.txt ← Generated output
 ```
 
 **File descriptions:**
@@ -304,17 +300,4 @@ The endpoint should respond through an available worker.
 - Clustering enables multiple Node.js worker processes to handle incoming connections.
 - The primary process can monitor worker failures and start replacements.
 - Cluster workers have separate memory spaces; ordinary JavaScript variables are not automatically shared.
-
-## 5. Test Summary
-
-| Test case | Expected result |
-|---|---|
-| Process a valid input file | Uppercase output file is created |
-| Process a missing input file | Error is reported; process exits unsuccessfully |
-| Process a large file | Data is processed incrementally |
-| Request `/` | HTTP 200 and worker process ID |
-| Request `/health` | HTTP 200 and healthy status |
-| Request an unknown route | HTTP 404 |
-| Terminate a worker | Primary detects the exit and starts a replacement |
-
-Record the actual results after executing each test.
+---
